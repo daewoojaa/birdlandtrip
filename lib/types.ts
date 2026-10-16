@@ -1,6 +1,6 @@
 export type StopType = "drive" | "charge" | "food" | "view" | "stay" | "other";
 export type DayKey = "d5" | "d6" | "d7" | "d8";
-export type TabKey = DayKey | "dash";
+export type TabKey = DayKey | "dash" | "map";
 
 export interface Backup {
   name: string;

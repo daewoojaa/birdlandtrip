@@ -2,6 +2,7 @@
 
 Next.js 15 (App Router) + TypeScript PWA. UI text is Thai; keep new UI copy in Thai. Deployed to Vercel from GitHub `main`.
 
+- Home tab `components/RouteMap.tsx` draws a simulated SVG route map: province outlines in `lib/provinces.ts` (generated from OpenGISData-Thailand, simplified), approximate stop coordinates in `lib/places.ts` keyed by seed stop id (custom stops have none), projection in `lib/geo.ts`. Live position uses `watchPosition`, started by a button (auto only on trip days if permission already granted).
 - State lives in `components/TripApp.tsx` (one `TripState`, persisted to localStorage key `khaokho-trip-v1`). Change state only through `mutate` / `mutateStop` (they clone, stamp `updatedAt`, and the save effect writes localStorage).
 - Seed plan, day/tab metadata and stop types are in `lib/seed.ts`; shared types in `lib/types.ts`; helpers in `lib/utils.ts`.
 - Components are client components; render user text as JSX children (React escapes it), never `dangerouslySetInnerHTML`.

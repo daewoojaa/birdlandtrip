@@ -1,7 +1,7 @@
 // Service worker: แคชไฟล์แอปให้ใช้ออฟไลน์ได้
 // - /_next/static และไอคอน: cache-first (ไฟล์มี hash ไม่เปลี่ยน)
 // - หน้าเว็บ (navigation): network-first แล้ว fallback เป็นแคช
-const CACHE = "khaokho-trip-v2";
+const CACHE = "khaokho-trip-v3";
 const PRECACHE = ["/", "/icons/icon.svg", "/icons/icon-192.png", "/icons/icon-512.png"];
 
 self.addEventListener("install", (e) => {

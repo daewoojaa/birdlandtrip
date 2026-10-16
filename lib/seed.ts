@@ -36,6 +36,7 @@ const KHAOKHO = [
 export const DAY_KEYS: DayKey[] = ["d5", "d6", "d7", "d8"];
 
 export const DAYS: { key: TabKey; d: string; w: string; title: string; sub?: string }[] = [
+  { key: "map", d: "แผนที่", w: "เส้นทาง", title: "แผนที่เส้นทาง" },
   { key: "d5", d: "5", w: "พฤ.", title: "วันพฤหัสบดีที่ 5 พ.ย.", sub: "ขาไป ปากเกร็ด → เขาค้อ" },
   { key: "d6", d: "6", w: "ศ.", title: "วันศุกร์ที่ 6 พ.ย.", sub: "เที่ยวเขาค้อ เพิ่มรายการเองได้" },
   { key: "d7", d: "7", w: "ส.", title: "วันเสาร์ที่ 7 พ.ย.", sub: "เที่ยวเขาค้อ เพิ่มรายการเองได้" },

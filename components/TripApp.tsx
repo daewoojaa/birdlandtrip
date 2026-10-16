@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import Dashboard, { summaryText } from "./Dashboard";
 import StopCard from "./StopCard";
+import RouteMap from "./RouteMap";
 import { DAYS, TYPES, seed } from "@/lib/seed";
 import type { DayKey, LogKey, Stop, StopType, TabKey, TripState } from "@/lib/types";
 import { fmtTime, nextId, sortStops } from "@/lib/utils";
@@ -24,7 +25,7 @@ function loadLocal(): TripState | null {
 
 export default function TripApp() {
   const [state, setState] = useState<TripState | null>(null);
-  const [tab, setTab] = useState<TabKey>("d5");
+  const [tab, setTab] = useState<TabKey>("map");
   const [open, setOpen] = useState<Set<string>>(new Set());
   const [toastText, setToastText] = useState("");
   const [toastShow, setToastShow] = useState(false);
@@ -89,7 +90,7 @@ export default function TripApp() {
   }
 
   const meta = DAYS.find((d) => d.key === tab)!;
-  const isDay = tab !== "dash";
+  const isDay = tab !== "dash" && tab !== "map";
   const stops = isDay ? state.days[tab as DayKey] : [];
   const done = stops.filter((s) => s.checkin).length;
 
@@ -282,7 +283,7 @@ export default function TripApp() {
             </div>
           </>
         ) : (
-          <Dashboard state={state} onCopy={copySummary} onReset={reset} />
+          tab === "map" ? <RouteMap state={state} /> : <Dashboard state={state} onCopy={copySummary} onReset={reset} />
         )}
       </main>
 
