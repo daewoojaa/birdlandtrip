@@ -1,0 +1,138 @@
+:root{
+  --bg:#EEF1F3; --surface:#FFFFFF; --ink:#16202B; --muted:#5B6875; --line:#C9D1D8;
+  --sign:#1D4F91; --sign-ink:#FFFFFF; --amber:#E8A317; --amber-ink:#2A1E00; --go:#2E8B57; --warn:#B4441E;
+  --soft:#E3E8EC;
+  color-scheme: light;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#141B22; --surface:#1C252E; --ink:#E8EDF1; --muted:#9AA7B3; --line:#2C3843;
+    --sign:#6FA3E8; --sign-ink:#0E1A2A; --amber:#F2B53A; --amber-ink:#2A1E00; --go:#5CC48A; --warn:#F08A62;
+    --soft:#25303A; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#141B22; --surface:#1C252E; --ink:#E8EDF1; --muted:#9AA7B3; --line:#2C3843;
+  --sign:#6FA3E8; --sign-ink:#0E1A2A; --amber:#F2B53A; --amber-ink:#2A1E00; --go:#5CC48A; --warn:#F08A62;
+  --soft:#25303A; color-scheme: dark;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;min-height:100%;background:var(--bg);color:var(--ink);
+  font-family:"IBM Plex Sans Thai",system-ui,-apple-system,"Segoe UI",Tahoma,sans-serif;font-size:16px;line-height:1.55;
+  padding-bottom:84px}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--sign)}
+h1,h2,h3,.disp{font-family:"Bai Jamjuree","IBM Plex Sans Thai",system-ui,sans-serif}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
+
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--sign);color:var(--sign-ink);padding:14px 18px 12px}
+.top-row{display:flex;align-items:baseline;justify-content:space-between;gap:12px;max-width:720px;margin:0 auto}
+.top h1{margin:0;font-size:1.3rem;font-weight:700;letter-spacing:.2px}
+.top .sub{font-size:.85rem;opacity:.85}
+.save{font-size:.78rem;opacity:.85;white-space:nowrap}
+
+main{max-width:720px;margin:0 auto;padding:18px 16px 24px}
+.dayhead{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;margin:4px 0 14px}
+.dayhead h2{margin:0;font-size:1.5rem;font-weight:700;line-height:1.2}
+.dayhead p{margin:2px 0 0;color:var(--muted);font-size:.9rem}
+
+/* The road */
+.road{position:relative;margin:0;padding:0 0 0 34px;list-style:none}
+.road::before{content:"";position:absolute;left:13px;top:6px;bottom:6px;width:6px;border-radius:3px;background:var(--ink);opacity:.85}
+.road::after{content:"";position:absolute;left:15px;top:10px;bottom:10px;width:2px;
+  background:repeating-linear-gradient(to bottom,var(--amber) 0 10px,transparent 10px 20px)}
+.stop{position:relative;margin:0 0 12px}
+.marker{position:absolute;left:-30px;top:14px;width:24px;height:24px;border-radius:50%;background:var(--surface);
+  border:3px solid var(--ink);z-index:1;display:grid;place-items:center;font-size:12px}
+.stop.done .marker{background:var(--amber);border-color:var(--amber)}
+.stop.done .marker::after{content:"";width:8px;height:5px;border:2px solid var(--amber-ink);border-top:0;border-right:0;transform:rotate(-45deg) translate(1px,-1px)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.stop.done .card{border-color:color-mix(in srgb,var(--amber) 55%,var(--line))}
+.summary{display:grid;grid-template-columns:auto 1fr auto;gap:4px 12px;align-items:start;width:100%;
+  text-align:left;background:none;border:0;padding:12px 14px;cursor:pointer}
+.time{font-family:"Bai Jamjuree",sans-serif;font-weight:600;font-size:1.02rem;min-width:48px;padding-top:1px}
+.name{font-weight:600;line-height:1.35}
+.blurb{grid-column:2/4;color:var(--muted);font-size:.88rem;margin-top:-2px}
+.chip{font-size:.75rem;padding:2px 8px;border-radius:999px;background:var(--soft);color:var(--muted);white-space:nowrap}
+.chip.charge{background:color-mix(in srgb,var(--go) 18%,transparent);color:var(--go)}
+.chip.done{background:var(--amber);color:var(--amber-ink)}
+.body{border-top:1px solid var(--line);padding:14px;display:none}
+.stop.open .body{display:block}
+
+.actions{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.btn{display:inline-flex;align-items:center;gap:6px;border-radius:10px;border:1px solid var(--line);background:var(--surface);
+  padding:9px 14px;font-weight:500;text-decoration:none;color:var(--ink);cursor:pointer;min-height:44px}
+.btn.primary{background:var(--amber);border-color:var(--amber);color:var(--amber-ink);font-weight:600}
+.btn.blue{background:var(--sign);border-color:var(--sign);color:var(--sign-ink)}
+.btn.ghost{background:transparent}
+.btn.danger{color:var(--warn);border-color:color-mix(in srgb,var(--warn) 50%,var(--line));background:transparent}
+.stamp{font-size:.88rem;color:var(--muted);margin:-6px 0 12px}
+.stamp strong{color:var(--ink)}
+
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+@media (min-width:560px){.grid.g3{grid-template-columns:repeat(3,minmax(0,1fr))}}
+label.f{display:flex;flex-direction:column;gap:4px;font-size:.82rem;color:var(--muted)}
+label.f.wide{grid-column:1/-1}
+.f input,.f textarea,.f select{background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:9px 10px;font-size:1rem;color:var(--ink);width:100%}
+.f textarea{min-height:64px;resize:vertical}
+fieldset{border:0;margin:0 0 14px;padding:0}
+legend{font-family:"Bai Jamjuree",sans-serif;font-weight:600;font-size:.95rem;margin-bottom:8px;padding:0}
+
+.backups{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.backups li{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:9px 10px;border-radius:8px;background:var(--bg)}
+.backups .bn{font-size:.92rem;line-height:1.35}
+.backups .bn small{display:block;color:var(--muted);font-size:.78rem}
+.backups .ba{display:flex;gap:6px;flex-shrink:0}
+.mini{border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:6px 10px;font-size:.82rem;cursor:pointer;text-decoration:none;color:var(--ink);min-height:36px;display:inline-flex;align-items:center}
+details.edit{margin-top:6px}
+details.edit summary{cursor:pointer;color:var(--muted);font-size:.88rem;padding:6px 0}
+
+.empty{border:2px dashed var(--line);border-radius:12px;padding:22px 18px;text-align:center;color:var(--muted);margin-bottom:14px}
+.empty strong{display:block;color:var(--ink);font-family:"Bai Jamjuree",sans-serif;font-size:1.05rem;margin-bottom:4px}
+.addbox{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px;margin-top:6px}
+.addbox h3{margin:0 0 10px;font-size:1rem}
+
+/* Dashboard */
+.hero{background:var(--sign);color:var(--sign-ink);border-radius:14px;padding:18px;margin-bottom:14px}
+.hero .lab{font-size:.88rem;opacity:.85}
+.hero .big{font-family:"Bai Jamjuree",sans-serif;font-size:2.4rem;font-weight:700;line-height:1.1}
+.split{display:flex;flex-wrap:wrap;gap:6px 18px;margin-top:10px;font-size:.92rem}
+.split b{font-weight:600}
+.stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-bottom:14px}
+@media (min-width:560px){.stats{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.stat .v{font-family:"Bai Jamjuree",sans-serif;font-size:1.45rem;font-weight:700;line-height:1.2}
+.stat .k{font-size:.82rem;color:var(--muted)}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:14px}
+.panel h3{margin:0 0 10px;font-size:1.02rem}
+.bar{display:grid;grid-template-columns:62px 1fr 84px;gap:10px;align-items:center;font-size:.9rem;margin:6px 0}
+.track{height:12px;border-radius:6px;background:var(--soft);overflow:hidden;display:flex}
+.track span{display:block;height:100%}
+.seg-c{background:var(--go)} .seg-f{background:var(--amber)} .seg-o{background:var(--sign)}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:.8rem;color:var(--muted);margin-top:8px}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;vertical-align:-1px}
+.prog{height:10px;border-radius:5px;background:var(--soft);overflow:hidden;margin-top:8px}
+.prog span{display:block;height:100%;background:var(--amber)}
+.log{list-style:none;margin:0;padding:0}
+.log li{display:grid;grid-template-columns:70px 1fr auto;gap:10px;padding:9px 0;border-top:1px solid var(--line);font-size:.9rem}
+.log li:first-child{border-top:0}
+.log .lt{font-family:"Bai Jamjuree",sans-serif;font-weight:600}
+.log .lc{color:var(--muted);white-space:nowrap}
+.note{font-size:.82rem;color:var(--muted)}
+
+/* Tab bar */
+nav.tabs{position:fixed;left:0;right:0;bottom:0;z-index:6;background:var(--surface);border-top:1px solid var(--line);
+  padding:6px 8px calc(6px + env(safe-area-inset-bottom,0px))}
+.tabs-in{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;max-width:720px;margin:0 auto}
+.tab{border:0;background:none;border-radius:10px;padding:6px 2px;cursor:pointer;display:flex;flex-direction:column;align-items:center;line-height:1.2;min-height:48px;justify-content:center;color:var(--muted)}
+.tab .d{font-family:"Bai Jamjuree",sans-serif;font-weight:700;font-size:1.05rem}
+.tab .w{font-size:.72rem}
+.tab[aria-selected="true"]{background:var(--sign);color:var(--sign-ink)}
+.toast{position:fixed;left:50%;bottom:calc(86px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);
+  padding:9px 16px;border-radius:999px;font-size:.9rem;opacity:0;pointer-events:none;transition:opacity .2s;z-index:9}
+.toast.show{opacity:1}
+@media (prefers-reduced-motion:reduce){.toast{transition:none}}
